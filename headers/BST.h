@@ -45,6 +45,15 @@ public:
     // Print BST
     void print();
 
+    // Search for the lowest value in the tree and return its address
+    Node* minNode(Node* root);
+
+    // Search for the largest value in the tree and return its address 
+    Node* maxNode(Node* root);
+
+    // Get successor in place of the removed node
+    Node* getSuccessor(Node* node);
+
     // Root getter
     Node* getRoot() { return root; }
 };
