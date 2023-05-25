@@ -61,7 +61,9 @@ void BST::remove(int value) {
     // If node has child/children we have to get its successor
     // The successor will have at most one child
     if (node->left != nullptr || node->right != nullptr) {
-        node = getSuccessor(node);
+        Node* successor = getSuccessor(node);
+        node->value = successor->value;
+        node = successor;
     }
 
     // If node is a leaf (no children) then we have to simply disconnect it from the tree
