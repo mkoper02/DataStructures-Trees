@@ -18,12 +18,18 @@ BST::BST() {
     root = nullptr;
 }
 
-BST::BST(vector<int> elements) {
+BST::BST(vector<int> elements) : BST() {
+    if (elements.empty()) return;
 
+    for (auto element : elements) {
+        add(element);
+    }
 }
 
 BST::~BST() {
-    
+    while (root != nullptr) {
+        remove(root->value);
+    }
 }
 
 void BST::add(int value) {
