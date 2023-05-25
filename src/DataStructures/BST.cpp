@@ -9,7 +9,7 @@ Node::Node() {
 
 Node::Node(Node *parent, int value) {
     this->parent = parent;
-    this->value;
+    this->value = value;
     left = nullptr;
     right = nullptr;
 }
@@ -44,6 +44,7 @@ void BST::add(int value) {
 
         if (new_element_parent->right == nullptr && value >= new_element_parent->value) {
             new_element_parent->right = new Node(new_element_parent, value);
+            return;
         }
 
         if (new_element_parent->value > value) new_element_parent = new_element_parent->left;
@@ -52,10 +53,21 @@ void BST::add(int value) {
 }
 
 void BST::remove(int value) {
-    
+
 }
 
 Node* BST::find(int value) {
+    Node* current_node = root;
+
+    while (current_node != nullptr) {
+        if (current_node->value == value) {
+            return current_node;
+        }
+
+        if (current_node->value > value) current_node = current_node->left;
+        else current_node = current_node->right;
+    }
+
     return nullptr;
 }
 
