@@ -15,7 +15,7 @@ public:
     Node();
 
     // Parameterized constructor
-    Node(int value, Node* parent);
+    Node(Node* parent, int value);
 };
 
 // Class representing Binary Search Tree (BST)
