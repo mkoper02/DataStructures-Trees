@@ -56,4 +56,10 @@ public:
 
     // Root getter
     Node* getRoot() { return root; }
+
+    // Creates array with all nodes from the tree
+    // nodes - array to store nodes
+    // node - address of the node where function should start
+    // node_index - index of the node 
+    void indexNodes(vector<Node*> &nodes, Node* node, int node_index);
 };

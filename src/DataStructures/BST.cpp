@@ -1,4 +1,6 @@
 #include "BST.h"
+#include <iostream>
+#include <math.h>
 
 Node::Node() {
     value = 0;
@@ -132,7 +134,65 @@ Node* BST::find(int value) {
 }
 
 void BST::print() {
+    vector<Node*> nodes;
+    indexNodes(nodes, root, 0);
 
+    printf("-----------------------------------------------------------------------------\n");
+
+    if(nodes.size() == 0){
+        printf("puste\n");
+        return;
+    }
+
+    unsigned height = 2*floor(log2(nodes.size()))+1;
+    unsigned width = 2*pow(2, floor(log2(nodes.size()))) - 1;
+    
+    int p = width+1;
+    int already_printed = 0;
+
+    for(int y = 1; y <= height; y++){
+
+        if(y%2 == 0) {
+            printf("\n\n");
+            continue;
+        }
+
+        for(int x = 1; x <= width; x++){
+
+            
+            if(x%p == p/2) {
+                if(nodes[already_printed] != nullptr) printf("%4d", nodes[already_printed]->value);
+                else printf("    ");
+                already_printed++;
+            }
+            else printf("    ");
+
+            if(already_printed == nodes.size()){
+                printf("\n\n");
+                return;
+            }
+
+        }
+        if(y%2 == 1) p /= 2;
+    }
+}
+
+void BST::indexNodes(vector<Node*> &nodes, Node* node, int node_index) {
+    if(node == nullptr) return;
+
+    // Extend size of the vector (if necessary) and assign null value
+    unsigned size = pow(2, floor(log2(node_index + 1)) + 1) - 1;
+    if (nodes.size() < size) {
+        nodes.resize(size);
+
+        for(int i = floor(size / 2); i < size - 1; i++) 
+            nodes[i] = nullptr;
+    }
+    
+    // Add current node to the node and start search of the left and right subtree
+    nodes[node_index] = node;
+    indexNodes(nodes, node->left, 2 * node_index + 1);
+    indexNodes(nodes, node->right, 2 * node_index + 2);
 }
 
 Node* BST::minNode(Node* root) {
