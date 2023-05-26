@@ -1,6 +1,8 @@
 #include <iostream>
 #include "BST.h"
 
+using namespace std;
+
 int main() {
     vector<int> arr;
     arr.insert(arr.end(), {12, 5, 7, 11, 9});

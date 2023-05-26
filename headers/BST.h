@@ -1,11 +1,9 @@
 #include <vector>
 
-using namespace std;
-
 // Class representing node for BST
-class Node{
+class Node {
 public:
-    int value;          // value of thenode (key)
+    int value;          // value of the node (key)
     Node* parent;       // pointer to node's parent
     Node* left;         // pointer to left child
     Node* right;        // pointer to right child
@@ -28,7 +26,7 @@ public:
     BST();
 
     // Constructor, create BST based on given data
-    BST(vector<int> elements);
+    BST(std::vector<int> elements);
 
     // Destructor
     ~BST();
@@ -61,5 +59,5 @@ public:
     // nodes - array to store nodes
     // node - address of the node where function should start
     // node_index - index of the node 
-    void indexNodes(vector<Node*> &nodes, Node* node, int node_index);
+    void indexNodes(std::vector<Node*> &nodes, Node* node, int node_index);
 };

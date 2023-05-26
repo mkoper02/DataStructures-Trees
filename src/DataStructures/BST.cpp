@@ -20,7 +20,7 @@ BST::BST() {
     root = nullptr;
 }
 
-BST::BST(vector<int> elements) : BST() {
+BST::BST(std::vector<int> elements) : BST() {
     if (elements.empty()) return;
 
     for (auto element : elements) {
@@ -134,7 +134,7 @@ Node* BST::find(int value) {
 }
 
 void BST::print() {
-    vector<Node*> nodes;
+    std::vector<Node*> nodes;
     indexNodes(nodes, root, 0);
 
     printf("-----------------------------------------------------------------------------\n");
@@ -177,7 +177,7 @@ void BST::print() {
     }
 }
 
-void BST::indexNodes(vector<Node*> &nodes, Node* node, int node_index) {
+void BST::indexNodes(std::vector<Node*> &nodes, Node* node, int node_index) {
     if(node == nullptr) return;
 
     // Extend size of the vector (if necessary) and assign null value
