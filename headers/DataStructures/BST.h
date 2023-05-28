@@ -16,10 +16,10 @@ public:
     // Destructor
     ~BST();
 
-    // Add given element to the tree
+    // Add element with given value to the tree
     void add(int value);
 
-    // Remove given element from the tree
+    // Remove element with given value from the tree
     void remove(int value);
 
     // Search for element with given value and return its address

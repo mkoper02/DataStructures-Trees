@@ -1,3 +1,5 @@
+#pragma once
+
 // Class representing node for trees
 class Node {
 public:
