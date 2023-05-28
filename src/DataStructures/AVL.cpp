@@ -81,7 +81,7 @@ void AVL::balanceTree(Node* main_node, Node* new_node) {
 
     // Left rotate
     if (balance_factor < -1 && new_node->value > main_node->right->value) {
-
+        leftRotation(main_node);
     }
 
     // Left Right rotate
@@ -101,7 +101,30 @@ void AVL::balanceTree(Node* main_node, Node* new_node) {
 }
 
 void AVL::leftRotation(Node* node) {
+    // If node or node's left child doesnt exist - dont rotate
+    if (node == nullptr || node->right == nullptr) return;
 
+    Node* new_right_root = node->right;
+
+    //Rotation
+    node->right = new_right_root->left;
+    if (node->right != nullptr) {
+        node->right->parent = node;
+    }
+
+    // Copy data
+    new_right_root->left = node;
+    new_right_root->parent = node->parent;
+    node->parent = new_right_root;
+
+    // If given node was root we have to assign it again
+    // Else we have to assign new child 
+    if (new_right_root->parent == nullptr) {
+        root = new_right_root;
+    }
+    else {
+        new_right_root->parent->right = new_right_root;
+    }
 }
 
 void AVL::rightRotation(Node* node) {
@@ -116,17 +139,19 @@ void AVL::rightRotation(Node* node) {
         node->left->parent = node; 
     }
 
+    // Copy data 
     new_left_root->right = node;
     new_left_root->parent = node->parent;
     node->parent = new_left_root;
 
     // If given node was root we have to assign it again
+    // Else we have to assign new child 
     if (new_left_root->parent == nullptr) {
         root = new_left_root;
-        return;
     }
-
-    new_left_root->parent->left = new_left_root;
+    else {
+        new_left_root->parent->left = new_left_root;
+    }
 }
 
 void AVL::leftRightRotation(Node* main_node, Node* new_node) {
