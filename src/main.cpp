@@ -35,5 +35,13 @@ int main() {
 
     avl.print();
 
+    avl.add(7);
+    avl.add(9);
+
+    avl.add(14);
+    avl.add(15);
+
+    avl.print();
+
     system("pause");
 }

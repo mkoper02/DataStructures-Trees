@@ -75,7 +75,7 @@ void AVL::add(int value) {
 }
 
 void AVL::balanceTree(Node* main_node, Node* new_node) {
-    if (main_node == nullptr) return;
+    if (main_node == nullptr || new_node == nullptr) return;
 
     int balance_factor = getBalanceFactor(main_node);
 
@@ -85,17 +85,17 @@ void AVL::balanceTree(Node* main_node, Node* new_node) {
     }
 
     // Left Right rotate
-    if (balance_factor > 1 && new_node->value > main_node->left->value) {
-
+    else if (balance_factor > 1 && new_node->value > main_node->left->value) {
+        leftRightRotation(main_node);
     }
 
     // Right rotate
-    if (balance_factor > 1 && new_node->value < main_node->left->value) {
+    else if (balance_factor > 1 && new_node->value < main_node->left->value) {
         rightRotation(main_node);
     }
 
     // Right Left rotate
-    if (balance_factor < -1 && new_node->value < main_node->right->value) {
+    else if (balance_factor < -1 && new_node->value < main_node->right->value) {
         
     }
 }
@@ -154,12 +154,46 @@ void AVL::rightRotation(Node* node) {
     }
 }
 
-void AVL::leftRightRotation(Node* main_node, Node* new_node) {
-    
+void AVL::leftRightRotation(Node* node) {
+    // If node or node's left child doesnt exist - dont rotate
+    if (node == nullptr || node->left == nullptr) return;
+
+    Node* new_left_node = node->left->right;
+
+    // Rotation
+    node->left->right = new_left_node->left;
+    if (node->left->right != nullptr) {
+        node->left->right->parent = node->left;
+    }
+
+    // Copy data
+    new_left_node->left = node->left;
+    node->left->parent = new_left_node;
+    node->left = new_left_node;
+    new_left_node->parent = node;
+
+    rightRotation(node);
 }
 
-void AVL::rightLeftRotation(Node* main_node, Node* new_node) {
-    
+void AVL::rightLeftRotation(Node* node) {
+    // If node or node's left child doesnt exist - dont rotate
+    if (node == nullptr || node->right == nullptr) return;
+
+    Node* new_right_node = node->right->left;
+
+    // Rotation
+    node->right->left = new_right_node->right;
+    if (node->right->left != nullptr) {
+        node->right->left->parent = node->right;
+    }
+
+    // Copy data
+    new_right_node->right = node->right;
+    node->right->parent = new_right_node;
+    node->right = new_right_node;
+    new_right_node->parent = node;
+
+    leftRotation(node);
 }
 
 void AVL::print() {

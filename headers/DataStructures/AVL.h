@@ -38,11 +38,17 @@ public:
     void rightRotation(Node* node);
 
     // First left then right rotation of the tree
-    void leftRightRotation(Node* main_node, Node* new_node);
+    void leftRightRotation(Node* node);
 
     // First right then left rotation of the tree
-    void rightLeftRotation(Node* main_node, Node* new_node);
+    void rightLeftRotation(Node* node);
 
+    // Print AVL
     void print();
+
+    // Creates array with all nodes from the tree
+    // nodes - array to store nodes
+    // node - address of the node where function should start
+    // node_index - index of the node 
     void indexNodes(std::vector<Node*> &nodes, Node* node, int node_index);
 };
