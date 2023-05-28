@@ -1,5 +1,5 @@
 #include <iostream>
-#include "BST.h"
+#include "DataStructures/BST.h"
 
 using namespace std;
 

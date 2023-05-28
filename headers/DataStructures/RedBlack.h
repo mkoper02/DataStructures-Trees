@@ -1,3 +1,5 @@
+#include "Node.h"
+
 class RedBlack {
 private:
     /* data */

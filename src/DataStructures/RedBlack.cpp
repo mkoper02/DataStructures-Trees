@@ -1,4 +1,4 @@
-#include "RedBlack.h"
+#include "DataStructures/RedBlack.h"
 
 RedBlack::RedBlack(/* args */) {
     

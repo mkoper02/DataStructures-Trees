@@ -1,16 +1,4 @@
-#include "AVL.h"
-
-Node_AVL::Node_AVL() {
-    value = 0;
-    left = nullptr;
-    right = nullptr;
-}
-
-Node_AVL::Node_AVL(int value) {
-    this->value = value;
-    left = nullptr;
-    right = nullptr;
-}
+#include "DataStructures/AVL.h"
 
 AVL::AVL() {
     root = nullptr;
@@ -20,7 +8,7 @@ AVL::~AVL() {
 
 }
 
-int AVL::getHeight(Node_AVL *node) {
+int AVL::getHeight(Node *node) {
     // If tree is empty
     if (node == nullptr) return -1;
 
