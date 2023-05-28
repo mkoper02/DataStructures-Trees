@@ -2,14 +2,14 @@
 #include <iostream>
 #include <math.h>
 
-Node::Node() {
+Node_BST::Node_BST() {
     value = 0;
     parent = nullptr;
     left = nullptr;
     right = nullptr;
 }
 
-Node::Node(Node *parent, int value) {
+Node_BST::Node_BST(Node_BST *parent, int value) {
     this->parent = parent;
     this->value = value;
     left = nullptr;
@@ -37,21 +37,21 @@ BST::~BST() {
 void BST::add(int value) {
     // If BST is empty new value becomes root
     if (root == nullptr) {
-        root = new Node(nullptr, value);
+        root = new Node_BST(nullptr, value);
         return;
     }
 
     // Look for a parent for the new node. Go down the tree (left or right) according to the key
     // Search ends when a suitable parent is found for the new node
-    Node* new_element_parent = root;
+    Node_BST* new_element_parent = root;
     while(new_element_parent != nullptr) {
         if (new_element_parent->left == nullptr && value < new_element_parent->value) {
-            new_element_parent->left = new Node(new_element_parent, value);
+            new_element_parent->left = new Node_BST(new_element_parent, value);
             return;
         }
 
         if (new_element_parent->right == nullptr && value >= new_element_parent->value) {
-            new_element_parent->right = new Node(new_element_parent, value);
+            new_element_parent->right = new Node_BST(new_element_parent, value);
             return;
         }
 
@@ -61,7 +61,7 @@ void BST::add(int value) {
 }
 
 void BST::remove(int value) {
-    Node* node = find(value);
+    Node_BST* node = find(value);
 
     // If value not found in the tree - return
     if (node == nullptr) return;
@@ -69,7 +69,7 @@ void BST::remove(int value) {
     // If node has child/children we have to get its successor
     // The successor will have at most one child
     if (node->left != nullptr || node->right != nullptr) {
-        Node* successor = getSuccessor(node);
+        Node_BST* successor = getSuccessor(node);
         node->value = successor->value;
         node = successor;
     }
@@ -85,7 +85,7 @@ void BST::remove(int value) {
     // If node has a child then we connect the child with node's parent and delete the node
     // If node that we delete was root then the child becomes new root
     else {
-        Node* child;
+        Node_BST* child;
 
         if (node->left != nullptr) child = node->left;
         else child = node->right;
@@ -100,13 +100,13 @@ void BST::remove(int value) {
     delete node;
 }
 
-Node* BST::getSuccessor(Node* node) {
+Node_BST* BST::getSuccessor(Node_BST* node) {
     // If tree empty dont look for the successor
     if (root == nullptr) return nullptr;
 
     // If right subtree exists then the successor will be the lowest value in it
     // Otherwise the successor will be the highset value in the left subtree
-    Node* successor = minNode(node->right);
+    Node_BST* successor = minNode(node->right);
 
     if (successor == nullptr) {
         successor = maxNode(node->left);
@@ -115,8 +115,8 @@ Node* BST::getSuccessor(Node* node) {
     return successor;
 }
 
-Node* BST::find(int value) {
-    Node* current_node = root;
+Node_BST* BST::find(int value) {
+    Node_BST* current_node = root;
 
     // Start from the root and look for the node with the given key
     // If the key is lesser than the current element start searching in the right subtree
@@ -134,7 +134,7 @@ Node* BST::find(int value) {
 }
 
 void BST::print() {
-    std::vector<Node*> nodes;
+    std::vector<Node_BST*> nodes;
     indexNodes(nodes, root, 0);
 
     printf("-----------------------------------------------------------------------------\n");
@@ -177,7 +177,7 @@ void BST::print() {
     }
 }
 
-void BST::indexNodes(std::vector<Node*> &nodes, Node* node, int node_index) {
+void BST::indexNodes(std::vector<Node_BST*> &nodes, Node_BST* node, int node_index) {
     if(node == nullptr) return;
 
     // Extend size of the vector (if necessary) and assign null value
@@ -195,11 +195,11 @@ void BST::indexNodes(std::vector<Node*> &nodes, Node* node, int node_index) {
     indexNodes(nodes, node->right, 2 * node_index + 2);
 }
 
-Node* BST::minNode(Node* root) {
+Node_BST* BST::minNode(Node_BST* root) {
     if (root == nullptr) return nullptr;
 
     // Look for the lowest value in the tree (node farthest to the left)
-    Node* minimum = root;
+    Node_BST* minimum = root;
     while (minimum->left != nullptr) {
         minimum = minimum->left;
     }
@@ -207,11 +207,11 @@ Node* BST::minNode(Node* root) {
     return minimum;
 }
 
-Node* BST::maxNode(Node* root) {
+Node_BST* BST::maxNode(Node_BST* root) {
     if (root == nullptr) return nullptr;
 
     // Look for the highest value in the tree (node farthest to the right)
-    Node* maximum = root;
+    Node_BST* maximum = root;
     while(maximum->right != nullptr) {
         maximum = maximum->right;
     }

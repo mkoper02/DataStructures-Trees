@@ -1,25 +1,25 @@
 #include <vector>
 
 // Class representing node for BST
-class Node {
+class Node_BST {
 public:
     int value;          // value of the node (key)
-    Node* parent;       // pointer to node's parent
-    Node* left;         // pointer to left child
-    Node* right;        // pointer to right child
+    Node_BST* parent;       // pointer to node's parent
+    Node_BST* left;         // pointer to left child
+    Node_BST* right;        // pointer to right child
 
 public:
     // Default constructor
-    Node();
+    Node_BST();
 
     // Parameterized constructor
-    Node(Node* parent, int value);
+    Node_BST(Node_BST* parent, int value);
 };
 
 // Class representing Binary Search Tree (BST)
 class BST {
 private:
-    Node* root;         // root of the tree
+    Node_BST* root;         // root of the tree
 
 public:
     // Default constructor, create empty BST
@@ -38,26 +38,26 @@ public:
     void remove(int value);
 
     // Search for element with given value and return its address
-    Node* find(int value);
+    Node_BST* find(int value);
 
     // Print BST
     void print();
 
     // Search for the lowest value in the tree and return its address
-    Node* minNode(Node* root);
+    Node_BST* minNode(Node_BST* root);
 
     // Search for the largest value in the tree and return its address 
-    Node* maxNode(Node* root);
+    Node_BST* maxNode(Node_BST* root);
 
     // Get successor in place of the removed node
-    Node* getSuccessor(Node* node);
+    Node_BST* getSuccessor(Node_BST* node);
 
     // Root getter
-    Node* getRoot() { return root; }
+    Node_BST* getRoot() { return root; }
 
     // Creates array with all nodes from the tree
     // nodes - array to store nodes
     // node - address of the node where function should start
     // node_index - index of the node 
-    void indexNodes(std::vector<Node*> &nodes, Node* node, int node_index);
+    void indexNodes(std::vector<Node_BST*> &nodes, Node_BST* node, int node_index);
 };

@@ -1,12 +1,12 @@
 #include "AVL.h"
 
-Node::Node() {
+Node_AVL::Node_AVL() {
     value = 0;
     left = nullptr;
     right = nullptr;
 }
 
-Node::Node(int value) {
+Node_AVL::Node_AVL(int value) {
     this->value = value;
     left = nullptr;
     right = nullptr;
@@ -20,7 +20,7 @@ AVL::~AVL() {
 
 }
 
-int AVL::getHeight(Node *node) {
+int AVL::getHeight(Node_AVL *node) {
     // If tree is empty
     if (node == nullptr) return -1;
 
