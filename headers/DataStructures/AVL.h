@@ -1,11 +1,7 @@
-#include "Node.h"
-#include <vector>
+#include "DataStructures/Tree.h"
 
 // Class representing AVL tree
-class AVL {
-private:
-    Node* root;         // root of the tree
-
+class AVL : public Tree {
 public:
     // Default constructor, create empty AVL
     AVL();
@@ -25,12 +21,6 @@ public:
     // Add element with given value to the tree
     void add(int value);
 
-    // Search for element with given value and return its address
-    Node* find(int value);
-
-    // Root getter
-    Node* getRoot() { return root; }
-
     // Balance tree after adding new node
     void balanceTree(Node* main_node, Node* new_node);
 
@@ -45,13 +35,4 @@ public:
 
     // First right then left rotation of the tree
     void rightLeftRotation(Node* node);
-
-    // Print AVL
-    void print();
-
-    // Creates array with all nodes from the tree
-    // nodes - array to store nodes
-    // node - address of the node where function should start
-    // node_index - index of the node 
-    void indexNodes(std::vector<Node*> &nodes, Node* node, int node_index);
 };

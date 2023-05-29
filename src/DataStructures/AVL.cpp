@@ -1,10 +1,6 @@
 #include "DataStructures/AVL.h"
-#include <iostream>
-#include <math.h>
 
-AVL::AVL() {
-    root = nullptr;
-}
+AVL::AVL() : Tree() {}
 
 AVL::AVL(std::vector<int> elements) : AVL() {
     if (elements.empty()) return;
@@ -16,24 +12,6 @@ AVL::AVL(std::vector<int> elements) : AVL() {
 
 AVL::~AVL() {
 
-}
-
-Node *AVL::find(int value) {
-    Node* current_node = root;
-
-    // Start from the root and look for the node with the given key
-    // If the key is lesser than the current element start searching in the right subtree
-    // If the key is greater than the current element start searching in the left subtree
-    while (current_node != nullptr) {
-        if (current_node->value == value) {
-            return current_node;
-        }
-
-        if (current_node->value > value) current_node = current_node->left;
-        else current_node = current_node->right;
-    }
-
-    return nullptr;
 }
 
 int AVL::getHeight(Node *node) {
@@ -205,66 +183,4 @@ void AVL::rightLeftRotation(Node* node) {
     new_right_node->parent = node;
 
     leftRotation(node);
-}
-
-void AVL::print() {
-    std::vector<Node*> nodes;
-    indexNodes(nodes, root, 0);
-
-    printf("-----------------------------------------------------------------------------\n");
-
-    if(nodes.size() == 0){
-        printf("puste\n");
-        return;
-    }
-
-    unsigned height = 2*floor(log2(nodes.size()))+1;
-    unsigned width = 2*pow(2, floor(log2(nodes.size()))) - 1;
-    
-    int p = width+1;
-    int already_printed = 0;
-
-    for(int y = 1; y <= height; y++){
-
-        if(y%2 == 0) {
-            printf("\n\n");
-            continue;
-        }
-
-        for(int x = 1; x <= width; x++){
-
-            
-            if(x%p == p/2) {
-                if(nodes[already_printed] != nullptr) printf("%4d", nodes[already_printed]->value);
-                else printf("    ");
-                already_printed++;
-            }
-            else printf("    ");
-
-            if(already_printed == nodes.size()){
-                printf("\n\n");
-                return;
-            }
-
-        }
-        if(y%2 == 1) p /= 2;
-    }
-}
-
-void AVL::indexNodes(std::vector<Node*> &nodes, Node* node, int node_index) {
-    if(node == nullptr) return;
-
-    // Extend size of the vector (if necessary) and assign null value
-    unsigned size = pow(2, floor(log2(node_index + 1)) + 1) - 1;
-    if (nodes.size() < size) {
-        nodes.resize(size);
-
-        for(int i = floor(size / 2); i < size - 1; i++) 
-            nodes[i] = nullptr;
-    }
-    
-    // Add current node to the node and start search of the left and right subtree
-    nodes[node_index] = node;
-    indexNodes(nodes, node->left, 2 * node_index + 1);
-    indexNodes(nodes, node->right, 2 * node_index + 2);
 }
