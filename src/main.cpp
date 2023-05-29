@@ -5,41 +5,11 @@
 using namespace std;
 
 int main() {
-    // vector<int> arr;
+    vector<int> arr;
     // arr.insert(arr.end(), {12, 5, 7, 11, 9});
+    arr.insert(arr.end(), {7, 2, 11, 3, 4});
 
-    // BST bst(arr);
-    // bst.print();
-
-    // bst.remove(11);
-    // bst.print();
-
-    // bst.remove(12);
-    // bst.print();
-
-    AVL avl;
-
-    avl.add(12);
-    avl.add(7);
-    avl.add(5);
-    avl.add(4);
-    avl.add(3);
-    avl.add(2);
-
-    avl.print();
-
-    avl.add(15);
-    avl.add(16);
-    avl.add(17);
-    avl.add(18);
-
-    avl.print();
-
-    avl.add(7);
-    avl.add(9);
-
-    avl.add(14);
-    avl.add(15);
+    AVL avl(arr);
 
     avl.print();
 

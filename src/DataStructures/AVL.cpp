@@ -6,6 +6,14 @@ AVL::AVL() {
     root = nullptr;
 }
 
+AVL::AVL(std::vector<int> elements) : AVL() {
+    if (elements.empty()) return;
+
+    for (auto element : elements) {
+        add(element);
+    }
+}
+
 AVL::~AVL() {
 
 }
@@ -47,6 +55,9 @@ int AVL::getBalanceFactor(Node *node) {
 }
 
 void AVL::add(int value) {
+    // Dont allow nodes with the same value
+    if (find(value) != nullptr) return;
+
     // If BST is empty new value becomes root
     if (root == nullptr) {
         root = new Node(nullptr, value);
@@ -96,7 +107,7 @@ void AVL::balanceTree(Node* main_node, Node* new_node) {
 
     // Right Left rotate
     else if (balance_factor < -1 && new_node->value < main_node->right->value) {
-        
+        rightLeftRotation(main_node);
     }
 }
 
@@ -123,7 +134,7 @@ void AVL::leftRotation(Node* node) {
         root = new_right_root;
     }
     else {
-        new_right_root->parent->right = new_right_root;
+        new_right_root->parent->left = new_right_root;
     }
 }
 
@@ -150,7 +161,7 @@ void AVL::rightRotation(Node* node) {
         root = new_left_root;
     }
     else {
-        new_left_root->parent->left = new_left_root;
+        new_left_root->parent->right = new_left_root;
     }
 }
 

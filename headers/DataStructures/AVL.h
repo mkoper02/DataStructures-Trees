@@ -10,6 +10,9 @@ public:
     // Default constructor, create empty AVL
     AVL();
 
+    // Constructor, create AVL based on given data
+    AVL(std::vector<int> elements);
+
     // Destructor
     ~AVL();
 
