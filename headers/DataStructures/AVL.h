@@ -25,7 +25,10 @@ public:
     void remove(int value);
 
     // Balance tree after adding new node
-    void balanceTree(Node* main_node, Node* new_node);
+    void balanceTreeAdd(Node* main_node, Node* new_node);
+
+    // Balance tree after removing node
+    void balanceTreeRemove(Node* node);
 
     // Rotations of the tree
     void leftRotation(Node* node);

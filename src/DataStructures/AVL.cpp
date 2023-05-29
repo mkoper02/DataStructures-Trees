@@ -49,13 +49,13 @@ void AVL::add(int value) {
     while(new_element_parent != nullptr) {
         if (new_element_parent->left == nullptr && value < new_element_parent->value) {
             new_element_parent->left = new Node(new_element_parent, value);
-            balanceTree(new_element_parent->parent, new_element_parent->left);
+            balanceTreeAdd(new_element_parent->parent, new_element_parent->left);
             return;
         }
 
         if (new_element_parent->right == nullptr && value >= new_element_parent->value) {
             new_element_parent->right = new Node(new_element_parent, value);
-            balanceTree(new_element_parent->parent, new_element_parent->right);
+            balanceTreeAdd(new_element_parent->parent, new_element_parent->right);
             return;
         }
 
@@ -65,10 +65,47 @@ void AVL::add(int value) {
 }
 
 void AVL::remove(int value) {
+    Node* node = find(value);
 
+    // If value not found in the tree - return
+    if (node == nullptr) return;
+
+    // If node has child/children we have to get its successor
+    // The successor will have at most one child
+    if (node->left != nullptr || node->right != nullptr) {
+        Node* successor = getSuccessor(node);
+        node->value = successor->value;
+        node = successor;
+    }
+
+    // If node is a leaf (no children) then we have to simply disconnect it from the tree
+    // If node was the root the BST becomes empty 
+    if (node->left == nullptr && node->right == nullptr) {
+        if (node->parent != nullptr && node->parent->left == node) node->parent->left = nullptr;
+        else if (node->parent != nullptr) node->parent->right = nullptr;
+        else root = nullptr;
+    }
+
+    // If node has a child then we connect the child with node's parent and delete the node
+    // If node that we delete was root then the child becomes new root
+    else {
+        Node* child;
+
+        if (node->left != nullptr) child = node->left;
+        else child = node->right;
+
+        if (node->parent != nullptr && node->parent->left == node) node->parent->left = child;
+        else if (node->parent != nullptr) node->parent->right = child;
+        else root = child;
+
+        child->parent = node->parent;
+    }
+
+    balanceTreeRemove(node->parent);
+    delete node;
 }
 
-void AVL::balanceTree(Node* main_node, Node* new_node) {
+void AVL::balanceTreeAdd(Node* main_node, Node* new_node) {
     if (main_node == nullptr || new_node == nullptr) return;
 
     int balance_factor = getBalanceFactor(main_node);
@@ -94,6 +131,32 @@ void AVL::balanceTree(Node* main_node, Node* new_node) {
     }
 }
 
+void AVL::balanceTreeRemove(Node* node) {
+    if (node == nullptr) return;
+
+    int balance_factor = getBalanceFactor(node);
+
+    // Left rotate
+    if (balance_factor < -1 && getBalanceFactor(node->right) <= 0) {
+        leftRotation(node);
+    }
+
+    // Left Right rotate
+    else if (balance_factor > 1 && getBalanceFactor(node->left) == -1) {
+        leftRightRotation(node);
+    }
+
+    // Right rotate
+    else if (balance_factor > 1 && getBalanceFactor(node->left) >= 0) {
+        rightRotation(node);
+    }
+
+    // Right Left rotate
+    else if (balance_factor < -1 && getBalanceFactor(node->right) == 1) {
+        rightLeftRotation(node);
+    }
+}
+
 void AVL::leftRotation(Node* node) {
     // If node or node's left child doesnt exist - dont rotate
     if (node == nullptr || node->right == nullptr) return;
@@ -115,10 +178,11 @@ void AVL::leftRotation(Node* node) {
     // Else we have to assign new child 
     if (new_right_root->parent == nullptr) {
         root = new_right_root;
+        return;
     }
-    else {
-        new_right_root->parent->left = new_right_root;
-    }
+
+    if (new_right_root->value < new_right_root->parent->value) new_right_root->parent->left = new_right_root;
+    else new_right_root->parent->right = new_right_root;
 }
 
 void AVL::rightRotation(Node* node) {
@@ -142,10 +206,11 @@ void AVL::rightRotation(Node* node) {
     // Else we have to assign new child 
     if (new_left_root->parent == nullptr) {
         root = new_left_root;
+        return;
     }
-    else {
-        new_left_root->parent->right = new_left_root;
-    }
+
+    if (new_left_root->value < new_left_root->parent->value) new_left_root->parent->left = new_left_root;
+    else new_left_root->parent->right = new_left_root;
 }
 
 void AVL::leftRightRotation(Node* node) {
