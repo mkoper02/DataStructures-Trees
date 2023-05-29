@@ -1,12 +1,11 @@
 #include "DataStructures/BST.h"
-#include <iostream>
-#include <math.h>
 
 BST::BST() : Tree() {}
 
 BST::BST(std::vector<int> elements) : BST() {
     if (elements.empty()) return;
 
+    // Add data to the tree
     for (auto element : elements) {
         add(element);
     }

@@ -5,6 +5,7 @@ AVL::AVL() : Tree() {}
 AVL::AVL(std::vector<int> elements) : AVL() {
     if (elements.empty()) return;
 
+    // Add data to the tree
     for (auto element : elements) {
         add(element);
     }
@@ -64,7 +65,7 @@ void AVL::add(int value) {
 }
 
 void AVL::remove(int value) {
-    
+
 }
 
 void AVL::balanceTree(Node* main_node, Node* new_node) {
