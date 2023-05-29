@@ -21,18 +21,15 @@ public:
     // Add element with given value to the tree
     void add(int value);
 
+    // Remove elemnt with given value from the tree
+    void remove(int value);
+
     // Balance tree after adding new node
     void balanceTree(Node* main_node, Node* new_node);
 
-    // Left rotation of the tree
+    // Rotations of the tree
     void leftRotation(Node* node);
-
-    // Right rotation of the tree
     void rightRotation(Node* node);
-
-    // First left then right rotation of the tree
     void leftRightRotation(Node* node);
-
-    // First right then left rotation of the tree
     void rightLeftRotation(Node* node);
 };

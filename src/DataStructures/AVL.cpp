@@ -63,6 +63,10 @@ void AVL::add(int value) {
     }
 }
 
+void AVL::remove(int value) {
+    
+}
+
 void AVL::balanceTree(Node* main_node, Node* new_node) {
     if (main_node == nullptr || new_node == nullptr) return;
 
