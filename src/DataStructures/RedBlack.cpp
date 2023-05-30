@@ -7,7 +7,9 @@ RedBlack::RedBlack(std::vector<int> elements) : RedBlack() {
 }
 
 RedBlack::~RedBlack() {
-
+    while (root != nullptr) {
+        remove(root->value);
+    }
 }
 
 void RedBlack::add(int value) {
@@ -84,11 +86,55 @@ void RedBlack::remove(int value) {
 }
 
 void RedBlack::balanceTreeAdd(Node_RB* main_node, Node_RB* new_node) {
+    if (main_node == nullptr || new_node == nullptr) return;
 
+    int balance_factor = getBalanceFactor(main_node);
+
+    // Left rotate
+    if (balance_factor < -1 && new_node->value > main_node->right->value) {
+        leftRotation(main_node);
+    }
+
+    // Left Right rotate
+    else if (balance_factor > 1 && new_node->value > main_node->left->value) {
+        leftRightRotation(main_node);
+    }
+
+    // Right rotate
+    else if (balance_factor > 1 && new_node->value < main_node->left->value) {
+        rightRotation(main_node);
+    }
+
+    // Right Left rotate
+    else if (balance_factor < -1 && new_node->value < main_node->right->value) {
+        rightLeftRotation(main_node);
+    }
 }
 
 void RedBlack::balanceTreeRemove(Node_RB* node) {
+   if (node == nullptr) return;
 
+    int balance_factor = getBalanceFactor(node);
+
+    // Left rotate
+    if (balance_factor < -1 && getBalanceFactor(node->right) <= 0) {
+        leftRotation(node);
+    }
+
+    // Left Right rotate
+    else if (balance_factor > 1 && getBalanceFactor(node->left) == -1) {
+        leftRightRotation(node);
+    }
+
+    // Right rotate
+    else if (balance_factor > 1 && getBalanceFactor(node->left) >= 0) {
+        rightRotation(node);
+    }
+
+    // Right Left rotate
+    else if (balance_factor < -1 && getBalanceFactor(node->right) == 1) {
+        rightLeftRotation(node);
+    }
 }
 
 
@@ -188,4 +234,8 @@ void RedBlack::rightLeftRotation(Node_RB* node) {
     new_right_node->parent = node;
 
     leftRotation(node);
+}
+
+void RedBlack::fixColours() {
+    
 }

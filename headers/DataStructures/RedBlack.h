@@ -29,4 +29,7 @@ public:
     void rightRotation(Node_RB* node);
     void leftRightRotation(Node_RB* node);
     void rightLeftRotation(Node_RB* node);
+
+    // Change colours where necassary
+    void fixColours();
 };
