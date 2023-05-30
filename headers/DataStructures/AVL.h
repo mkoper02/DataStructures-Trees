@@ -1,7 +1,7 @@
 #include "DataStructures/Tree.h"
 
 // Class representing AVL tree
-class AVL : public Tree {
+class AVL : public Tree<Node> {
 public:
     // Default constructor, create empty AVL
     AVL();

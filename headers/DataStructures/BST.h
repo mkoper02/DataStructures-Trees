@@ -1,7 +1,7 @@
 #include "DataStructures/Tree.h"
 
 // Class representing Binary Search Tree (BST)
-class BST : public Tree {
+class BST : public Tree<Node> {
 public:
     // Default constructor, create empty BST
     BST();

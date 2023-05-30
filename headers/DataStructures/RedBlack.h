@@ -1,7 +1,7 @@
 #include "DataStructures/Tree.h"
 
 // Class representing Red Black tree
-class RedBlack : public Tree {
+class RedBlack : public Tree<Node_RB> {
 public:
     // Default constructor, create empty Red Black tree
     RedBlack();

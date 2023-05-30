@@ -2,17 +2,19 @@
 #include <iostream>
 #include <math.h>
 
-Tree::Tree() {
+template <class T>
+Tree<T>::Tree() {
     root = nullptr;
 }
 
-Node* Tree::getSuccessor(Node* node) {
+template <class T>
+T* Tree<T>::getSuccessor(T* node) {
     // If tree empty dont look for the successor
     if (root == nullptr) return nullptr;
 
     // If right subtree exists then the successor will be the lowest value in it
     // Otherwise the successor will be the highset value in the left subtree
-    Node* successor = minNode(node->right);
+    T* successor = minNode(node->right);
 
     if (successor == nullptr) {
         successor = maxNode(node->left);
@@ -21,8 +23,9 @@ Node* Tree::getSuccessor(Node* node) {
     return successor;
 }
 
-Node* Tree::find(int value) {
-    Node* current_node = root;
+template <class T>
+T* Tree<T>::find(int value) {
+    T* current_node = root;
 
     // Start from the root and look for the node with the given key
     // If the key is lesser than the current element start searching in the right subtree
@@ -39,11 +42,12 @@ Node* Tree::find(int value) {
     return nullptr;
 }
 
-Node* Tree::minNode(Node* root) {
+template <class T>
+T* Tree<T>::minNode(T* root) {
     if (root == nullptr) return nullptr;
 
     // Look for the lowest value in the tree (node farthest to the left)
-    Node* minimum = root;
+    T* minimum = root;
     while (minimum->left != nullptr) {
         minimum = minimum->left;
     }
@@ -51,11 +55,12 @@ Node* Tree::minNode(Node* root) {
     return minimum;
 }
 
-Node* Tree::maxNode(Node* root) {
+template <class T>
+T* Tree<T>::maxNode(T* root) {
     if (root == nullptr) return nullptr;
 
     // Look for the highest value in the tree (node farthest to the right)
-    Node* maximum = root;
+    T* maximum = root;
     while(maximum->right != nullptr) {
         maximum = maximum->right;
     }
@@ -63,8 +68,9 @@ Node* Tree::maxNode(Node* root) {
     return maximum;
 }
 
-void Tree::print() {
-        std::vector<Node*> nodes;
+template <class T>
+void Tree<T>::print() {
+    std::vector<T*> nodes;
     indexNodes(nodes, root, 0);
 
     printf("-----------------------------------------------------------------------------\n");
@@ -107,7 +113,8 @@ void Tree::print() {
     }
 }
 
-void Tree::indexNodes(std::vector<Node*> &nodes, Node* node, int node_index) {
+template <class T>
+void Tree<T>::indexNodes(std::vector<T*> &nodes, T* node, int node_index) {
     if(node == nullptr) return;
 
     // Extend size of the vector (if necessary) and assign null value
@@ -124,3 +131,6 @@ void Tree::indexNodes(std::vector<Node*> &nodes, Node* node, int node_index) {
     indexNodes(nodes, node->left, 2 * node_index + 1);
     indexNodes(nodes, node->right, 2 * node_index + 2);
 }
+
+template class Tree<Node>;
+template class Tree<Node_RB>;
