@@ -12,25 +12,9 @@ AVL::AVL(std::vector<int> elements) : AVL() {
 }
 
 AVL::~AVL() {
-
-}
-
-int AVL::getHeight(Node *node) {
-    // If tree is empty
-    if (node == nullptr) return -1;
-
-    // Check height of the subtrees
-    int left_height = getHeight(node->left);
-    int right_height = getHeight(node->right);
-
-    // Choose larger value
-    if (left_height > right_height) return left_height + 1;
-    else return right_height + 1;
-}
-
-int AVL::getBalanceFactor(Node *node) { 
-    if (node == nullptr) return -1;
-    return getHeight(node->left) - getHeight(node->right);
+    while (root != nullptr) {
+        remove(root->value);
+    }
 }
 
 void AVL::add(int value) {

@@ -30,6 +30,12 @@ public:
     // Search for the largest value in the tree and return its adress 
     TreeNode* maxNode(TreeNode* root);
 
+    // Get height of the given node
+    int getHeight(TreeNode* node);
+
+    // Get balance factor of the given node
+    int getBalanceFactor(TreeNode* node);
+
     // Root getter
     TreeNode* getRoot() { return root; }
 

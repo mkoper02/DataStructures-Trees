@@ -69,6 +69,26 @@ TreeNode* Tree<TreeNode>::maxNode(TreeNode* root) {
 }
 
 template <class TreeNode>
+int Tree<TreeNode>::getHeight(TreeNode *node) {
+    // If tree is empty
+    if (node == nullptr) return -1;
+
+    // Check height of the subtrees
+    int left_height = getHeight(node->left);
+    int right_height = getHeight(node->right);
+
+    // Choose larger value
+    if (left_height > right_height) return left_height + 1;
+    else return right_height + 1;
+}
+
+template <class TreeNode>
+int Tree<TreeNode>::getBalanceFactor(TreeNode *node) { 
+    if (node == nullptr) return -1;
+    return getHeight(node->left) - getHeight(node->right);
+}
+
+template <class TreeNode>
 void Tree<TreeNode>::print() {
     std::vector<TreeNode*> nodes;
     indexNodes(nodes, root, 0);

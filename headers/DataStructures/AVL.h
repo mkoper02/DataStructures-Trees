@@ -12,12 +12,6 @@ public:
     // Destructor
     ~AVL();
 
-    // Get height of the given node
-    int getHeight(Node* node);
-
-    // Get balance factor of the given node
-    int getBalanceFactor(Node* node);
-
     // Add element with given value to the tree
     void add(int value);
 
