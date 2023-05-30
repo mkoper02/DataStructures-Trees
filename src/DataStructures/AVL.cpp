@@ -37,7 +37,7 @@ void AVL::add(int value) {
     // Dont allow nodes with the same value
     if (find(value) != nullptr) return;
 
-    // If BST is empty new value becomes root
+    // If AVL is empty new value becomes root
     if (root == nullptr) {
         root = new Node(nullptr, value);
         return;

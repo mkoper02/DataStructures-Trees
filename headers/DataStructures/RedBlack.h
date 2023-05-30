@@ -17,4 +17,16 @@ public:
 
     // Remove element with given value from the tree
     void remove(int value);
+
+    // Balance tree and fix colours after adding new node
+    void balanceTreeAdd(Node_RB* main_node, Node_RB* new_node);
+
+    // Balance tree and fix colours after removing node
+    void balanceTreeRemove(Node_RB* node);
+
+    // Rotation of the tree
+    void leftRotation(Node_RB* node);
+    void rightRotation(Node_RB* node);
+    void leftRightRotation(Node_RB* node);
+    void rightLeftRotation(Node_RB* node);
 };
