@@ -38,7 +38,7 @@ public:
     COLOUR colour;          // colour of the node (RED/BLACK)
 
     // Default constructor
-    Node_RB(){
+    Node_RB() {
         value = 0;
         parent = nullptr;
         left = nullptr;

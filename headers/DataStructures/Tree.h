@@ -4,10 +4,10 @@
 #include <vector>
 
 // Class representing Binary Tree
-template <class T>   // T - Node/Node_RB
+template <class TreeNode>   // TreeNode - Node/Node_RB
 class Tree {
 protected:
-    T* root;         // root of the tree
+    TreeNode* root;         // root of the tree
 public:
     // Constructor
     Tree();
@@ -19,19 +19,19 @@ public:
     virtual void remove(int value) = 0;
 
     // Get successor in place of the removed node
-    T* getSuccessor(T* node);
+    TreeNode* getSuccessor(TreeNode* node);
 
     // Search for element with given value in the tree and return its address
-    T* find(int value);
+    TreeNode* find(int value);
 
     // Search for the lwoest value in the tree and return its address
-    T* minNode(T* root);
+    TreeNode* minNode(TreeNode* root);
 
     // Search for the largest value in the tree and return its adress 
-    T* maxNode(T* root);
+    TreeNode* maxNode(TreeNode* root);
 
     // Root getter
-    T* getRoot() { return root; }
+    TreeNode* getRoot() { return root; }
 
     // Print tree
     void print();
@@ -40,5 +40,5 @@ public:
     // nodes - array to store nodes
     // node - address of the node where function should start
     // node_index - index of the node 
-    void indexNodes(std::vector<T*> &nodes, T* node, int node_index);
+    void indexNodes(std::vector<TreeNode*> &nodes, TreeNode* node, int node_index);
 };
