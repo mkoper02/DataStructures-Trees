@@ -18,6 +18,10 @@ public:
     // Remove elemnt with given value from the tree
     void remove(int value);
 
+private:
+    // Get balance factor of the given node
+    int getBalanceFactor(Node* node);
+
     // Balance tree after adding new node
     void balanceTreeAdd(Node* main_node, Node* new_node);
 

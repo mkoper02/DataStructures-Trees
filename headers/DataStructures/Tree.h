@@ -8,6 +8,7 @@ template <class TreeNode>   // TreeNode - Node/Node_RB
 class Tree {
 protected:
     TreeNode* root;         // root of the tree
+
 public:
     // Constructor
     Tree();
@@ -18,11 +19,18 @@ public:
     // Remove element with given value from the tree
     virtual void remove(int value) = 0;
 
-    // Get successor in place of the removed node
-    TreeNode* getSuccessor(TreeNode* node);
-
     // Search for element with given value in the tree and return its address
     TreeNode* find(int value);
+
+    // Root getter
+    TreeNode* getRoot() { return root; }
+
+    // Print tree
+    virtual void print();
+
+protected:
+    // Get successor in place of the removed node
+    TreeNode* getSuccessor(TreeNode* node);
 
     // Search for the lwoest value in the tree and return its address
     TreeNode* minNode(TreeNode* root);
@@ -32,15 +40,6 @@ public:
 
     // Get height of the given node
     int getHeight(TreeNode* node);
-
-    // Get balance factor of the given node
-    int getBalanceFactor(TreeNode* node);
-
-    // Root getter
-    TreeNode* getRoot() { return root; }
-
-    // Print tree
-    virtual void print();
 
     // Creates array with all nodes from the tree
     // nodes - array to store nodes

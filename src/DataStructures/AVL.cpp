@@ -89,6 +89,11 @@ void AVL::remove(int value) {
     delete node;
 }
 
+int AVL::getBalanceFactor(Node *node) { 
+    if (node == nullptr) return -1;
+    return getHeight(node->left) - getHeight(node->right);
+}
+
 void AVL::balanceTreeAdd(Node* main_node, Node* new_node) {
     if (main_node == nullptr || new_node == nullptr) return;
 

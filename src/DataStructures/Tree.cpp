@@ -83,12 +83,6 @@ int Tree<TreeNode>::getHeight(TreeNode *node) {
 }
 
 template <class TreeNode>
-int Tree<TreeNode>::getBalanceFactor(TreeNode *node) { 
-    if (node == nullptr) return -1;
-    return getHeight(node->left) - getHeight(node->right);
-}
-
-template <class TreeNode>
 void Tree<TreeNode>::print() {
     std::vector<TreeNode*> nodes;
     indexNodes(nodes, root, 0);
@@ -118,10 +112,10 @@ void Tree<TreeNode>::print() {
             
             if(x%p == p/2) {
                 if(nodes[already_printed] != nullptr) printf("%4d", nodes[already_printed]->value);
-                else printf("  ");
+                else printf("    ");
                 already_printed++;
             }
-            else printf("  ");
+            else printf("    ");
 
             if(already_printed == nodes.size()){
                 printf("\n\n");
