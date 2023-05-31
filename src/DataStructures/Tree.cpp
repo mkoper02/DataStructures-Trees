@@ -118,10 +118,10 @@ void Tree<TreeNode>::print() {
             
             if(x%p == p/2) {
                 if(nodes[already_printed] != nullptr) printf("%4d", nodes[already_printed]->value);
-                else printf("    ");
+                else printf("  ");
                 already_printed++;
             }
-            else printf("    ");
+            else printf("  ");
 
             if(already_printed == nodes.size()){
                 printf("\n\n");

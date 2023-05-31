@@ -52,5 +52,6 @@ public:
         this->value = value;
         left = nullptr;
         right = nullptr;
+        colour = RED;
     }
 };

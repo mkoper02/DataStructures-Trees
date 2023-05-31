@@ -40,7 +40,7 @@ public:
     TreeNode* getRoot() { return root; }
 
     // Print tree
-    void print();
+    virtual void print();
 
     // Creates array with all nodes from the tree
     // nodes - array to store nodes

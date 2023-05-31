@@ -32,4 +32,7 @@ public:
 
     // Change colours where necassary
     void fixColours();
+
+    // Print tree and add letter R next to red nodes
+    void print() override;
 };

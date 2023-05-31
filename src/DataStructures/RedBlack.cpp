@@ -1,9 +1,16 @@
 #include "DataStructures/RedBlack.h"
+#include <iostream>
+#include <math.h>
 
 RedBlack::RedBlack() : Tree() {}
 
 RedBlack::RedBlack(std::vector<int> elements) : RedBlack() {
+    if (elements.empty()) return;
 
+    // Add data to the tree
+    for (auto element : elements) {
+        add(element);
+    }
 }
 
 RedBlack::~RedBlack() {
@@ -238,4 +245,51 @@ void RedBlack::rightLeftRotation(Node_RB* node) {
 
 void RedBlack::fixColours() {
     
+}
+
+void RedBlack::print() {
+    std::vector<Node_RB*> nodes;
+    indexNodes(nodes, root, 0);
+
+    printf("-----------------------------------------------------------------------------\n");
+
+    if(nodes.size() == 0){
+        printf("puste\n");
+        return;
+    }
+
+    unsigned height = 2*floor(log2(nodes.size()))+1;
+    unsigned width = 2*pow(2, floor(log2(nodes.size()))) - 1;
+    
+    int p = width+1;
+    int already_printed = 0;
+
+    for(int y = 1; y <= height; y++){
+
+        if(y%2 == 0) {
+            printf("\n\n");
+            continue;
+        }
+
+        for(int x = 1; x <= width; x++){
+
+            
+            if(x%p == p/2) {
+                if(nodes[already_printed] != nullptr) {
+                    printf("%4d", nodes[already_printed]->value);
+                    if (nodes[already_printed]->colour == RED) printf("R");
+                }
+                else printf("  ");
+                already_printed++;
+            }
+            else printf("  ");
+
+            if(already_printed == nodes.size()){
+                printf("\n\n");
+                return;
+            }
+
+        }
+        if(y%2 == 1) p /= 2;
+    }
 }
