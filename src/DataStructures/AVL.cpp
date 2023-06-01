@@ -118,6 +118,8 @@ void AVL::balanceTreeAdd(Node* main_node, Node* new_node) {
     else if (balance_factor < -1 && new_node->value < main_node->right->value) {
         rightLeftRotation(main_node);
     }
+
+    balanceTreeAdd(main_node->parent, new_node->parent);
 }
 
 void AVL::balanceTreeRemove(Node* node) {
