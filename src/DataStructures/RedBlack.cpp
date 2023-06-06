@@ -36,13 +36,13 @@ void RedBlack::add(int value) {
     while(new_element_parent != nullptr) {
         if (new_element_parent->left == nullptr && value < new_element_parent->value) {
             new_element_parent->left = new Node_RB(new_element_parent, value);
-            balanceTreeAdd(new_element_parent->parent, new_element_parent->left);
+            checkColour(new_element_parent->left);
             return;
         }
 
         if (new_element_parent->right == nullptr && value >= new_element_parent->value) {
             new_element_parent->right = new Node_RB(new_element_parent, value);
-            balanceTreeAdd(new_element_parent->parent, new_element_parent->right);
+            checkColour(new_element_parent->right);
             return;
         }
 
@@ -88,62 +88,113 @@ void RedBlack::remove(int value) {
         child->parent = node->parent;
     }
 
-    balanceTreeRemove(node->parent);
+    if (node->parent != nullptr) checkColour(node->parent);
     delete node;
 }
 
-void RedBlack::balanceTreeAdd(Node_RB* main_node, Node_RB* new_node) {
-    if (main_node == nullptr || new_node == nullptr) return;
-
-    int balance_factor = getBalanceFactor(main_node);
-
-    // Left rotate
-    if (balance_factor < -1 && new_node->value > main_node->right->value) {
-        leftRotation(main_node);
+void RedBlack::checkColour(Node_RB* node) {
+    if (node == root && root != nullptr) {
+        root->colour = BLACK;
+        return;
     }
 
-    // Left Right rotate
-    else if (balance_factor > 1 && new_node->value > main_node->left->value) {
-        leftRightRotation(main_node);
+    // Dont allow two red nodes one after the other - fix the three
+    if (node->colour == RED && node->parent->colour == RED) {
+        correctTree(node);
     }
 
-    // Right rotate
-    else if (balance_factor > 1 && new_node->value < main_node->left->value) {
-        rightRotation(main_node);
+    if (node == root) {
+        root->colour = BLACK;
+        return;
     }
 
-    // Right Left rotate
-    else if (balance_factor < -1 && new_node->value < main_node->right->value) {
-        rightLeftRotation(main_node);
+    // Check next nodes
+    checkColour(node->parent);
+}
+
+// Correct any violations of the Red Black tree
+void RedBlack::correctTree(Node_RB* node) {
+    if (node->parent->parent == nullptr) return;
+
+    // Aunt is node->parent->parent->right
+    if (isLeftChild(node->parent)) {
+        // If aunt is black then rotate (colour black or nullptr)
+        if (node->parent->parent->right == nullptr || node->parent->parent->right->colour == BLACK) {
+            return rotate(node);
+        }
+
+        // If aunt is red then switch colors
+        if (node->parent->parent->right != nullptr) {
+            node->parent->parent->right->colour = BLACK;
+        }
+        node->parent->colour = BLACK;
+        node->parent->parent->colour = RED;
+    }
+
+    // Aunt is node->parent->parent->left
+    else {
+        // If aunt is black then rotate (colour black or nullptr)
+        if (node->parent->parent->left == nullptr || node->parent->parent->left->colour == BLACK) {
+            return rotate(node);
+        }
+
+        // If aunt is red then switch colors
+        if (node->parent->parent->left != nullptr) {
+            node->parent->parent->left->colour = BLACK;
+        }
+        node->parent->colour = BLACK;
+        node->parent->parent->colour = RED;
     }
 }
 
-void RedBlack::balanceTreeRemove(Node_RB* node) {
-   if (node == nullptr) return;
+bool RedBlack::isLeftChild(Node_RB* node) {
+    if (node->parent == nullptr) return false;
 
-    int balance_factor = getBalanceFactor(node);
-
-    // Left rotate
-    if (balance_factor < -1 && getBalanceFactor(node->right) <= 0) {
-        leftRotation(node);
-    }
-
-    // Left Right rotate
-    else if (balance_factor > 1 && getBalanceFactor(node->left) == -1) {
-        leftRightRotation(node);
-    }
-
-    // Right rotate
-    else if (balance_factor > 1 && getBalanceFactor(node->left) >= 0) {
-        rightRotation(node);
-    }
-
-    // Right Left rotate
-    else if (balance_factor < -1 && getBalanceFactor(node->right) == 1) {
-        rightLeftRotation(node);
-    }
+    if (node->parent->left == node) return true;
+    return false;
 }
 
+void RedBlack::rotate(Node_RB* node) {
+    if (isLeftChild(node)) {
+        if (isLeftChild(node->parent)) {
+            rightRotation(node->parent->parent);
+
+            // Fix colours
+            node->colour = RED;
+            node->parent->colour = BLACK;
+            if (node->parent->right != nullptr) node->parent->right->colour = RED;
+        }
+
+        else {
+            rightLeftRotation(node->parent->parent);
+            
+            // Fix colours
+            node->colour = BLACK;
+            node->right->colour = RED;
+            node->left->colour = RED;
+        }
+    }
+    
+    else {
+        if (!isLeftChild(node->parent)) {
+            leftRotation(node->parent->parent);
+
+            // Fix colours
+            node->colour = RED;
+            node->parent->colour = BLACK;
+            if (node->parent->left != nullptr) node->parent->left->colour = RED;
+        }
+
+        else {
+            leftRightRotation(node->parent->parent);
+
+            // Fix colours
+            node->colour = BLACK;
+            node->right->colour = RED;
+            node->left->colour = RED;
+        }
+    }
+}
 
 void RedBlack::leftRotation(Node_RB* node) {
     // If node or node's left child doesnt exist - dont rotate
@@ -243,10 +294,6 @@ void RedBlack::rightLeftRotation(Node_RB* node) {
     leftRotation(node);
 }
 
-void RedBlack::fixColours() {
-    
-}
-
 void RedBlack::print() {
     std::vector<Node_RB*> nodes;
     indexNodes(nodes, root, 0);
@@ -279,10 +326,10 @@ void RedBlack::print() {
                     printf("%4d", nodes[already_printed]->value);
                     if (nodes[already_printed]->colour == RED) printf("R");
                 }
-                else printf("  ");
+                else printf("    ");
                 already_printed++;
             }
-            else printf("  ");
+            else printf("    ");
 
             if(already_printed == nodes.size()){
                 printf("\n\n");
