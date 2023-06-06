@@ -90,7 +90,7 @@ void Tree<TreeNode>::print() {
     printf("-----------------------------------------------------------------------------\n");
 
     if(nodes.size() == 0){
-        printf("puste\n");
+        printf("Empty\n");
         return;
     }
 

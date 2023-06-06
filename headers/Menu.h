@@ -8,9 +8,12 @@ private:
     // Display tree to choose operations
     void displayTreeMenu();
 
-    // 
+    // Handle user input
     int handleMainMenuChoice();
-    void handleTreeChoice();
+    int handleTreeChoice();
+
+    // Enter correct value and format
+    int enterValue();
 
     template <class TreeNode>
     void treeMenu(Tree<TreeNode>* tree);

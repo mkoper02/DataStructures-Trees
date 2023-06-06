@@ -1,3 +1,8 @@
+#define WINDOWS
+#ifdef WINDOWS 
+    #include <windows.h>
+#endif
+
 #include "Menu.h"
 #include "DataStructures/BST.h"
 #include "DataStructures/AVL.h"
@@ -16,20 +21,16 @@ Menu::Menu() {
 
         if (choice == 0) return;
         else if (choice == 1)  {
-            cout << "bst";
             Tree<Node>* tree = new BST();
             treeMenu(tree);
-
         }
 
         else if (choice == 2) { 
-            cout << "avl";
             Tree<Node>* tree = new AVL();
             treeMenu(tree);
         }
 
         else {
-            cout << "redblack";
             Tree<Node_RB>* tree = new RedBlack();
             treeMenu(tree);
         }
@@ -82,14 +83,76 @@ int Menu::handleMainMenuChoice() {
     }
 }
 
+int Menu::handleTreeChoice() {
+    string choice;
+
+    while (true) {
+        // Enter choice
+        cout << ">";
+        cin >> choice;
+
+        if (choice.length() != 1) {
+            clearConsole();
+            displayMainMenu();   
+            continue;
+        }
+
+        switch (choice[0]) {
+        case '0': return 0;     // exit
+        case '1': return 1;     // add
+        case '2': return 2;     // remove
+        
+        default:
+            cout << "Invalid input!\n";
+            break;
+        }
+    }
+}
+
 template <class TreeNode>
 void Menu::treeMenu(Tree<TreeNode>* tree) {
-    clearConsole();
+    bool is_running = true;
+    int input;
 
-    tree->print();
+    while (true) {
+        clearConsole();
 
-    displayTreeMenu();
-    system("pause");
+        cout << "CURRENT STATE OF THE TREE:\n";
+        tree->print();
+
+        displayTreeMenu();
+
+        int choice = handleTreeChoice();
+        if (choice != 0) input = enterValue();
+        if (input == -9999) continue;
+
+        switch (choice) {
+            case 0: delete tree; return;
+            case 1: 
+                tree->add(input);
+                break;
+            case 2:
+                tree->remove(input);
+                break;
+        }
+    }
+
+}
+
+int Menu::enterValue() {
+    string value;
+
+    cout << "\nEnter value: ";
+    cin >> value;
+    cout << value.length() << endl;
+    for (int i = 0; i < value.length(); i++) {
+        cout << value[i] << "\t";
+        if (isdigit(value[i]) == false) {
+            return -9999;
+        }
+    }
+
+    return stoi(value);
 }
 
 void Menu::clearConsole() {
